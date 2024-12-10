@@ -1,9 +1,7 @@
-package xyz.sandersonsa.kafka_sp.entity;
+package xyz.sandersonsa.rest_api.model;
 
 
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +16,6 @@ public class Mensagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
     private Integer id;
     
     @Column

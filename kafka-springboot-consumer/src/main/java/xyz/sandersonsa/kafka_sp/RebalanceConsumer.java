@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import xyz.sandersonsa.kafka_sp.entity.Mensagem;
 import xyz.sandersonsa.kafka_sp.repository.MensagemRepository;
+import xyz.sandersonsa.kafka_sp.service.MensagemService;
 
 @Service
 public class RebalanceConsumer {
@@ -20,6 +21,9 @@ public class RebalanceConsumer {
 
     @Autowired
     private MensagemRepository mensagemRepository;
+
+    @Autowired
+    private MensagemService mensagemService;
 
     @Value("${app.spring.kafka.consumer.delay.ms}")
     private String consumerDalay;
@@ -43,7 +47,8 @@ public class RebalanceConsumer {
             mensagem.setHostName(hostName);
             mensagem.setPartition(String.valueOf(consumerRecord.partition()));
 
-            mensagemRepository.saveAndFlush(mensagem);
+            mensagemService.salvarMensagem(mensagem);
+            // mensagemRepository.saveAndFlush(mensagem);
         } catch (Exception e) {
             LOG.error("Error: ", e);
         }
