@@ -76,7 +76,7 @@ public class KafkaSpringbootPerformanceApplication {
             mensagem.setHostName(hostName);
             mensagem.setPartition(String.valueOf(consumerRecord.partition()));
 
-            mensagemService.salvarMensagem(mensagem);
+            mensagemService.salvarMensagemHttp(mensagem);
             // mensagemRepository.saveAndFlush(mensagem);
         } catch (Exception e) {
             LOG.error("Error: ", e);
