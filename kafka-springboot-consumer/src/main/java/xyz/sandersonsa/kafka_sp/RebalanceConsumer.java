@@ -11,7 +11,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import xyz.sandersonsa.kafka_sp.entity.Mensagem;
-import xyz.sandersonsa.kafka_sp.repository.MensagemRepository;
 import xyz.sandersonsa.kafka_sp.service.MensagemService;
 
 @Service
