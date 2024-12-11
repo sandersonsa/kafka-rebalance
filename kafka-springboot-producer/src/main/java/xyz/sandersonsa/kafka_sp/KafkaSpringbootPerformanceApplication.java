@@ -12,7 +12,7 @@ public class KafkaSpringbootPerformanceApplication implements CommandLineRunner 
 
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaSpringbootPerformanceApplication.class, args);
-	}
+	} 
 
 	@Override
 	public void run(String... args) throws Exception {
