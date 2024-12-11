@@ -52,17 +52,17 @@ public class KafkaSpringbootPerformanceApplication {
 		SpringApplication.run(KafkaSpringbootPerformanceApplication.class, args);
 	}
 
-	@Bean
-	public NewTopic topic() {
-		return TopicBuilder.name("kgh2381").partitions(1).replicas(1).build();
-	}
+	// @Bean
+	// public NewTopic topic() {
+	// 	return TopicBuilder.name("kgh2381").partitions(1).replicas(1).build();
+	// }
 
 	// @KafkaListener(id = "kgh2381", topics = "kgh2381", autoStartup = "false")
 	// void listen(String in) {
 	// 	log.info(in);
 	// }
 
-	@KafkaListener(id = "kgh2381",autoStartup = "false", topics = "${app.spring.kafka.consumer.topic}", groupId = "${app.spring.kafka.consumer.group-id.http}", properties = {
+	@KafkaListener(id = "kgh2381",autoStartup = "false", topics = "${app.spring.kafka.consumer.topic}", properties = {
             "max.poll.interval.ms:" + "${app.spring.kafka.max.poll.interval.ms}",
             ConsumerConfig.MAX_POLL_RECORDS_CONFIG + "=${app.spring.kafka.max.poll.records}"
     })
@@ -100,9 +100,9 @@ public class KafkaSpringbootPerformanceApplication {
 					.build();
 			ParallelStreamProcessor<String, String> processor = ParallelStreamProcessor
 					.createEosStreamProcessor(options);
-			processor.subscribe(List.of("kgh2381"));
+			processor.subscribe(List.of("t-rebalance"));
 			processor.poll(context -> messageListener.onMessage(context.getSingleConsumerRecord(), null, consumer));
-			IntStream.range(0, 10).forEach(i -> template.send("kgh2381", "foo" + i));
+			// IntStream.range(0, 10).forEach(i -> template.send("kgh2381", "foo" + i));
 		};
 	}
 
