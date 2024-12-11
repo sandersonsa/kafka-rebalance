@@ -51,7 +51,7 @@ public class RebalanceConsumer {
 
     }
 
-    @KafkaListener(topics = "${app.spring.kafka.consumer.topic}", groupId = "${app.spring.kafka.consumer.group-id}", properties = {
+    @KafkaListener(topics = "${app.spring.kafka.consumer.topic}", groupId = "${app.spring.kafka.consumer.group-id.http}", properties = {
             "max.poll.interval.ms:" + "${app.spring.kafka.max.poll.interval.ms}",
             ConsumerConfig.MAX_POLL_RECORDS_CONFIG + "=${app.spring.kafka.max.poll.records}"
     })
