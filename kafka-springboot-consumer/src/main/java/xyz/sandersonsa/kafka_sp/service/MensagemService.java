@@ -29,27 +29,23 @@ import xyz.sandersonsa.kafka_sp.entity.Mensagem;
 @Service
 public class MensagemService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MensagemService.class);
+
     String uri = "http://rest-api-apps.apps.cluster-kp9rz.kp9rz.sandbox423.opentlc.com/api/v1/mensagem";
+    HttpClient httpClient;
 
-    public void salvarMensagem(Mensagem mensagem) {
-        
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Mensagem> request = new HttpEntity<>(mensagem, headers);
-        restTemplate.postForObject(uri, request, Mensagem.class);
-    }
-
-    public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
-
+    public MensagemService() {
+        LOG.info("Inicializando MensagemService");
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
 		connectionManager.setMaxTotal(2000);
 		connectionManager.setDefaultMaxPerRoute(2000);
 
-		HttpClient httpClient = HttpClientBuilder.create()
+		httpClient = HttpClientBuilder.create()
 				.setConnectionManager(connectionManager)
 				.build();
+    }
+
+    public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
 
         HttpPost httpPost = new HttpPost(uri);
 
