@@ -91,11 +91,11 @@ public class KafkaSpringbootPerformanceApplication {
 		return args -> {
 			MessageListener messageListener = (MessageListener) registry.getListenerContainer("kgh2381")
 					.getContainerProperties().getMessageListener();
-			Consumer<String, String> consumer = cf.createConsumer("group", "");
+			Consumer<String, String> consumer = cf.createConsumer("confluent.parallel.consumer", "");
 			var options = ParallelConsumerOptions.<String, String>builder()
 					.ordering(ProcessingOrder.KEY)
 					.consumer(consumer)
-					.maxConcurrency(10)
+					.maxConcurrency(30)
 					.build();
 			ParallelStreamProcessor<String, String> processor = ParallelStreamProcessor
 					.createEosStreamProcessor(options);
