@@ -5,33 +5,18 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
-@Entity
 public class Mensagem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
     private Integer id;
     
-    @Column
     private String uuid;
 
-    @Column
     private String hostName;
 
-    @Column
     private String partition;
 
-    @Column(name="timestamp", insertable=false, updatable=false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
     
