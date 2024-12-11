@@ -1,5 +1,6 @@
 package xyz.sandersonsa.rest_api.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.java.Log;
@@ -12,13 +13,16 @@ public class MensagemService {
 
     private final MensagemRepository repository;
 
+    @Value("${app.delay-ms}")
+    private String appDelayMs;
+
     public MensagemService(MensagemRepository repository) {
         this.repository = repository;
     }
 
     public Mensagem salvarMensagem(Mensagem mensagem) {
         try {            
-            Thread.sleep(500);
+            Thread.sleep(Integer.parseInt(appDelayMs));
             log.info(" ### Salvar Mensagem: {} ####", mensagem.getUuid());
             return repository.save(mensagem);
         } catch (Exception e) {
