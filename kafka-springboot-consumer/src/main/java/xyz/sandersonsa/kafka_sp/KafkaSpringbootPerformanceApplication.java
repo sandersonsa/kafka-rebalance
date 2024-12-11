@@ -40,7 +40,6 @@ import xyz.sandersonsa.kafka_sp.entity.Mensagem;
 import xyz.sandersonsa.kafka_sp.service.MensagemService;
 
 @SpringBootApplication
-@EnableScheduling
 public class KafkaSpringbootPerformanceApplication {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KafkaSpringbootPerformanceApplication.class);
@@ -96,7 +95,7 @@ public class KafkaSpringbootPerformanceApplication {
 			var options = ParallelConsumerOptions.<String, String>builder()
 					.ordering(ProcessingOrder.KEY)
 					.consumer(consumer)
-					.maxConcurrency(100)
+					.maxConcurrency(10)
 					.build();
 			ParallelStreamProcessor<String, String> processor = ParallelStreamProcessor
 					.createEosStreamProcessor(options);
