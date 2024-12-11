@@ -3,12 +3,16 @@ package xyz.sandersonsa.kafka_sp.service;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -38,7 +42,16 @@ public class MensagemService {
     }
 
     public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
-        final HttpPost httpPost = new HttpPost(uri);
+
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+		connectionManager.setMaxTotal(2000);
+		connectionManager.setDefaultMaxPerRoute(2000);
+
+		HttpClient httpClient = HttpClientBuilder.create()
+				.setConnectionManager(connectionManager)
+				.build();
+
+        HttpPost httpPost = new HttpPost(uri);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(mensagem);
@@ -47,9 +60,13 @@ public class MensagemService {
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-type", "application/json");
 
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                CloseableHttpResponse response = httpClient.execute(httpPost)) {
-        }
+        //Executing the Get request
+        httpClient.execute(httpPost);
+
+        //Getting the response
+        // String response = EntityUtils.toString(httpresponse.getEntity());
+        // System.out.println(response);
+        
     }
 
 }
