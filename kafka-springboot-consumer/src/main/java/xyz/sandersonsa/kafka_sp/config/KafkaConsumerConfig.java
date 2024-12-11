@@ -29,14 +29,14 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Value("${app.spring.kafka.consumer.group-id}")
-    private String groupId;
+    // @Value("${app.spring.kafka.consumer.group-id}")
+    // private String groupId;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         var props = new HashMap<String, Object>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        // props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");

@@ -19,8 +19,8 @@ public class RebalanceConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(RebalanceConsumer.class);
 
-    @Autowired
-    private MensagemRepository mensagemRepository;
+    // @Autowired
+    // private MensagemRepository mensagemRepository;
 
     @Autowired
     private MensagemService mensagemService;
@@ -28,20 +28,39 @@ public class RebalanceConsumer {
     @Value("${app.spring.kafka.consumer.delay.ms}")
     private String consumerDalay;
 
-    @KafkaListener(topics = "${app.spring.kafka.consumer.topic}",
-                    groupId = "${app.spring.kafka.consumer.group-id}",
-                    properties = {
-                        "max.poll.interval.ms:" + "${app.spring.kafka.max.poll.interval.ms}",
-                        ConsumerConfig.MAX_POLL_RECORDS_CONFIG + "=${app.spring.kafka.max.poll.records}"
+    @KafkaListener(topics = "${app.spring.kafka.consumer.topic}", groupId = "${app.spring.kafka.consumer.group-id}", properties = {
+            "max.poll.interval.ms:" + "${app.spring.kafka.max.poll.interval.ms}",
+            ConsumerConfig.MAX_POLL_RECORDS_CONFIG + "=${app.spring.kafka.max.poll.records}"
     })
     public void consume(ConsumerRecord<String, String> consumerRecord) {
         String hostName = System.getenv("HOSTNAME");
 
         LOG.info("Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(),
                 consumerRecord.value());
-        try {
-            Thread.sleep(Integer.parseInt(consumerDalay));
+        try {            
+            Mensagem mensagem = new Mensagem();
+            mensagem.setUuid(consumerRecord.value());
+            mensagem.setHostName(hostName);
+            mensagem.setPartition(String.valueOf(consumerRecord.partition()));
 
+            mensagemService.salvarMensagem(mensagem);
+            // mensagemRepository.saveAndFlush(mensagem);
+        } catch (Exception e) {
+            LOG.error("Error: ", e);
+        }
+
+    }
+
+    @KafkaListener(topics = "${app.spring.kafka.consumer.topic}", groupId = "${app.spring.kafka.consumer.group-id}", properties = {
+            "max.poll.interval.ms:" + "${app.spring.kafka.max.poll.interval.ms}",
+            ConsumerConfig.MAX_POLL_RECORDS_CONFIG + "=${app.spring.kafka.max.poll.records}"
+    })
+    public void consumehttp(ConsumerRecord<String, String> consumerRecord) {
+        String hostName = System.getenv("HOSTNAME");
+
+        LOG.info("Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(),
+                consumerRecord.value());
+        try {
             Mensagem mensagem = new Mensagem();
             mensagem.setUuid(consumerRecord.value());
             mensagem.setHostName(hostName);
