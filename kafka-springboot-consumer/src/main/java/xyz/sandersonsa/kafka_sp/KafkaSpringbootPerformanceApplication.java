@@ -83,7 +83,7 @@ public class KafkaSpringbootPerformanceApplication {
 			var options = ParallelConsumerOptions.<String, String>builder()
 					.ordering(ProcessingOrder.KEY)
 					.consumer(consumer)
-					.maxConcurrency(100)
+					.maxConcurrency(15)
 					.build();
 			ParallelStreamProcessor<String, String> processor = ParallelStreamProcessor
 					.createEosStreamProcessor(options);
