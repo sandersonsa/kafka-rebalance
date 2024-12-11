@@ -17,8 +17,9 @@ public class MensagemService {
     }
 
     public Mensagem salvarMensagem(Mensagem mensagem) {
-        try {
-            // log.info(" ### Salvar Mensagem: {} ####", mensagem.getUuid());
+        try {            
+            Thread.sleep(500);
+            log.info(" ### Salvar Mensagem: {} ####", mensagem.getUuid());
             return repository.save(mensagem);
         } catch (Exception e) {
             // Handle exception or log the error

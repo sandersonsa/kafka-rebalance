@@ -25,32 +25,36 @@ public class MensagemService {
     public MensagemService() {
         LOG.info("Inicializando MensagemService");
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
-		connectionManager.setMaxTotal(2000);
-		connectionManager.setDefaultMaxPerRoute(2000);
+        connectionManager.setMaxTotal(2000);
+        connectionManager.setDefaultMaxPerRoute(2000);
 
-		httpClient = HttpClientBuilder.create()
-				.setConnectionManager(connectionManager)
-				.build();
+        httpClient = HttpClientBuilder.create()
+                .setConnectionManager(connectionManager)
+                .build();
     }
 
     public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
 
-        HttpPost httpPost = new HttpPost(uri);
+        try {
+            HttpPost httpPost = new HttpPost(uri);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(mensagem);
-        final StringEntity entity = new StringEntity(json);
-        httpPost.setEntity(entity);
-        httpPost.setHeader("Accept", "application/json");
-        httpPost.setHeader("Content-type", "application/json");
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(mensagem);
+            final StringEntity entity = new StringEntity(json);
+            httpPost.setEntity(entity);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
 
-        //Executing the Get request
-        httpClient.execute(httpPost);
+            // Executing the Get request
+            httpClient.execute(httpPost);
 
-        //Getting the response
-        // String response = EntityUtils.toString(httpresponse.getEntity());
-        // System.out.println(response);
-        
+            // Getting the response
+            // String response = EntityUtils.toString(httpresponse.getEntity());
+            // System.out.println(response);
+        } catch (Exception e) {
+            LOG.error(" # Error: ", e);
+        }
+
     }
 
 }
