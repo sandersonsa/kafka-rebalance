@@ -43,9 +43,7 @@ public class KafkaSpringbootPerformanceApplication {
 	})
 	public void consumehttp(ConsumerRecord<String, String> consumerRecord) {
 		String hostName = System.getenv("HOSTNAME");
-
-		LOG.info("ParallelStreamProcessor - Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(),
-				consumerRecord.offset(), consumerRecord.value());
+		LOG.info("ParallelStreamProcessor - Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(), consumerRecord.value());
 		try {
 			Mensagem mensagem = new Mensagem();
 			mensagem.setUuid(consumerRecord.value());
