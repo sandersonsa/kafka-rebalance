@@ -29,18 +29,14 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    // @Value("${app.spring.kafka.consumer.group-id}")
-    // private String groupId;
-
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         var props = new HashMap<String, Object>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        // props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+        // props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 
         return new DefaultKafkaConsumerFactory<>(props);
     }
@@ -51,7 +47,7 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
+        // factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
         factory.getContainerProperties().setConsumerRebalanceListener(new ConsumerAwareRebalanceListener() {
 
             @Override
@@ -80,22 +76,16 @@ public class KafkaConsumerConfig {
             @Override
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
                 System.out.println(" #### onPartitionsRevoked #### ");
-                // TODO Auto-generated method stub
-                // throw new UnsupportedOperationException("Unimplemented method 'onPartitionsRevoked'");
             }
 
             @Override
             public void onPartitionsAssigned(Consumer<?, ?> consumer, Collection<TopicPartition> partitions) {
                 System.out.println(" #### onPartitionsAssigned #### ");
-                // TODO Auto-generated method stub
-                // throw new UnsupportedOperationException("Unimplemented method 'onPartitionsAssigned'");
             }
 
             @Override
             public void onPartitionsLost(Consumer<?, ?> consumer, Collection<TopicPartition> partitions) {
                 System.out.println(" #### onPartitionsLost #### ");
-                // TODO Auto-generated method stub
-                // throw new UnsupportedOperationException("Unimplemented method 'onPartitionsLost'");
             }
 
             
