@@ -11,6 +11,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,7 +22,9 @@ public class MensagemService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MensagemService.class);
 
-    String uri = "http://rest-api-apps.apps.cluster-kp9rz.kp9rz.sandbox423.opentlc.com/api/v1/mensagem";
+    @Value("${app.rest.uri}")
+    private String REST_URI;
+
     CloseableHttpClient httpClient;
 
     public MensagemService() {
@@ -36,7 +39,7 @@ public class MensagemService {
     }
 
     public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {        
-        final HttpPost httpPost = new HttpPost(uri);
+        final HttpPost httpPost = new HttpPost(REST_URI);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(mensagem);
