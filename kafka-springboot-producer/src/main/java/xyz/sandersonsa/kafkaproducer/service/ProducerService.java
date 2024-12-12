@@ -3,6 +3,7 @@ package xyz.sandersonsa.kafkaproducer.service;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -30,7 +31,14 @@ public class ProducerService {
         for (int i = 0; i < quantidade; i++) {
             UUID uuid = UUID.randomUUID();
             JSONObject json = buildJson(uuid.toString());
-            kafkaTemplate.send("t-rebalance", json.toString());
+            
+            //kafkaTemplate.send("cluster-sefazrj-beta.req-servicos-ipva", uuid.toString());
+
+            var record = new ProducerRecord<String, String>("t-rebalance", json.toString());
+            record.headers().add("transaction-id", "23".getBytes());
+
+            kafkaTemplate.send(record);
+
         }
         System.out.println(quantidade + " mensagens enviadas");
         return CompletableFuture.completedFuture("Complete");
