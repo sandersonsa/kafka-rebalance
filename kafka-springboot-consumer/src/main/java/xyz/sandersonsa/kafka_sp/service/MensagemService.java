@@ -34,6 +34,7 @@ public class MensagemService {
 
         httpClient = HttpClientBuilder.create()
                 .setConnectionManager(connectionManager)
+                .setConnectionManagerShared(true)
                 .build();
     }
 
