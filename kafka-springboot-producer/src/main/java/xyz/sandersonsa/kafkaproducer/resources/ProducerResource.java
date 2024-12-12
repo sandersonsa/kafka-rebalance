@@ -19,8 +19,14 @@ public class ProducerResource {
     }
 
     @GetMapping("/{quantidade}")
-    public String getMethodName(@PathVariable String quantidade) throws NumberFormatException, InterruptedException {
+    public String producerMessages(@PathVariable String quantidade) throws NumberFormatException, InterruptedException {
         producerService.sendMessages(Integer.parseInt(quantidade));
+        return "OK";
+    }
+
+    @GetMapping("/detran/{quantidade}")
+    public String producerMessagesDetran(@PathVariable String quantidade) throws NumberFormatException, InterruptedException {
+        producerService.sendMessagesJson(Integer.parseInt(quantidade));
         return "OK";
     }
     
