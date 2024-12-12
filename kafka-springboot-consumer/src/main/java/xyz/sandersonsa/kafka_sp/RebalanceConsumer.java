@@ -39,7 +39,7 @@ public class RebalanceConsumer {
 
             mensagemService.salvarMensagemHttp(mensagem);
         } catch (Exception e) {
-            LOG.error("Error: ", e);
+            LOG.error(" ##### Error: ", e);
         }
 
     }

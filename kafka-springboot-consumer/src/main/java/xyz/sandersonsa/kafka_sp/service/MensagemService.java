@@ -52,7 +52,7 @@ public class MensagemService {
             // String response = EntityUtils.toString(httpresponse.getEntity());
             // System.out.println(response);
         } catch (Exception e) {
-            LOG.error(" # Error: ", e);
+            LOG.error(" ### => Error: ", e);
         }
 
     }
