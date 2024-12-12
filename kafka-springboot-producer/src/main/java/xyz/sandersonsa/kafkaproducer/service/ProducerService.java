@@ -1,5 +1,8 @@
 package xyz.sandersonsa.kafkaproducer.service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -16,6 +19,8 @@ public class ProducerService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
+    List<String> listaRenavam = Arrays.asList("01", "03", "04");
+
     @Async
     public CompletableFuture<String> sendMessages(Integer quantidade) throws InterruptedException {                
         for (int i = 0; i < quantidade; i++) {
@@ -28,9 +33,12 @@ public class ProducerService {
 
     @Async
     public CompletableFuture<String> sendMessagesJson(Integer quantidade) throws InterruptedException {                
+        Random rand = new Random();
         for (int i = 0; i < quantidade; i++) {
+            int randomIndex = rand.nextInt(listaRenavam.size());
+            String renavam = listaRenavam.get(randomIndex);
             UUID uuid = UUID.randomUUID();
-            JSONObject json = buildJson(uuid.toString());
+            JSONObject json = buildJson(uuid.toString(), renavam);
             
             //kafkaTemplate.send("cluster-sefazrj-beta.req-servicos-ipva", uuid.toString());
 
@@ -44,29 +52,7 @@ public class ProducerService {
         return CompletableFuture.completedFuture("Complete");
     }
 
-    /*
-     * {
-    "guid": "55a4469d-3455-4d9f-92f7-770ca4c70978",
-    "parte_fixa": {
-        "sequencial": "003002",
-        "modalidade": 4,
-        "codigo_transacao": "023",
-        "uf_origem_transacao": "SF",
-        "uf_origem_transmissao": "SF",
-        "uf_destino_transmissao": "RJ",
-        "tipo_condicionalidade": 1,
-        "tamanho_transacao": "0011",
-        "codigo_retorno_transacao": "00",
-        "dia_juliano": "346"
-    },
-    "parte_variavel": {
-        "renavam": "01375042146",
-        "indicador_bloco": 1
-    }
-}
-     */
-
-    private JSONObject buildJson(String id) {
+    private JSONObject buildJson(String id, String renavam) {
         JSONObject json = new JSONObject();
         
         json.put("guid", id);
@@ -85,7 +71,7 @@ public class ProducerService {
         json.put("parte_fixa", parteFixa);
         
         JSONObject parteVariavel = new JSONObject();
-        parteVariavel.put("renavam", "01375042146");
+        parteVariavel.put("renavam", renavam);
         parteVariavel.put("indicador_bloco", 1);
         
         json.put("parte_fixa", parteFixa);

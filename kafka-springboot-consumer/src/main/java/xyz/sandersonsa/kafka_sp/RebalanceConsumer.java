@@ -31,7 +31,11 @@ public class RebalanceConsumer {
         String hostName = System.getenv("HOSTNAME");
         Mensagem mensagem = new Mensagem();
         // LOG.info("Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(), consumerRecord.value());
-        try {            
+        try {
+            //ler headrs
+            consumerRecord.headers().forEach(header -> {
+                LOG.info("Header : {}, Value : {}", header.key(), header.value());
+            });
             mensagem.setUuid(consumerRecord.value());
             mensagem.setHostName(hostName);
             mensagem.setPartition(String.valueOf(consumerRecord.partition()));
