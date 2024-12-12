@@ -27,7 +27,6 @@ public class MensagemService {
     CloseableHttpClient httpClient;
 
     public MensagemService() {
-        LOG.info("Inicializando MensagemService");
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
         connectionManager.setMaxTotal(2000);
         connectionManager.setDefaultMaxPerRoute(2000);
@@ -38,10 +37,7 @@ public class MensagemService {
                 .build();
     }
 
-    public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
-        LOG.info(" ## Salvando mensagem :: ", mensagem.getUuid());
-        LOG.info(" ## HttpPost - {}", httpClient);
-        
+    public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {        
         final HttpPost httpPost = new HttpPost(uri);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -55,7 +51,7 @@ public class MensagemService {
             CloseableHttpResponse response = httpClient.execute(httpPost)){
 
             String result = EntityUtils.toString(response.getEntity());
-            System.out.println("POST Response Status:: "+ response.getStatusLine().getStatusCode());
+            System.out.println("POST Response Status:: " + response.getStatusLine().getStatusCode());
             // LOG.info(" ## Result: {}", result);
             // assertThat(statusCode, equalTo(HttpStatus.SC_OK));
         }
