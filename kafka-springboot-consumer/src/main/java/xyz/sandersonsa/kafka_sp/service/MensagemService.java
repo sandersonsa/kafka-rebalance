@@ -39,7 +39,7 @@ public class MensagemService {
 
     public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
         LOG.info(" ## Salvando mensagem :: ", mensagem.getUuid());
-        
+        LOG.info(" ## HttpPost - {}", httpClient);
         
         final HttpPost httpPost = new HttpPost(uri);
 
