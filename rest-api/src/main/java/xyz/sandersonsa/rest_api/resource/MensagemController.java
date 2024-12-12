@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.java.Log;
 import xyz.sandersonsa.rest_api.model.Mensagem;
 import xyz.sandersonsa.rest_api.service.MensagemService;
 
 @RestController
 @RequestMapping("/api/v1")
+@Log
 public class MensagemController {
 
     private final MensagemService service;
@@ -27,6 +29,7 @@ public class MensagemController {
 
     @PostMapping("/teste")
     public ResponseEntity<Void> perf() {
+        log.info(" ### Teste ###");
         return ResponseEntity.ok().build();
     }
 
