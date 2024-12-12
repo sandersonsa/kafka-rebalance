@@ -2,13 +2,11 @@ package xyz.sandersonsa.kafka_sp.service;
 
 import java.io.IOException;
 import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -55,29 +53,6 @@ public class MensagemService {
             // LOG.info(" ## Result: {}", result);
             // assertThat(statusCode, equalTo(HttpStatus.SC_OK));
         }
-        
-        
-        
-        // try {
-        //     HttpPost httpPost = new HttpPost(uri);
-
-        //     ObjectMapper mapper = new ObjectMapper();
-        //     String json = mapper.writeValueAsString(mensagem);
-        //     final StringEntity entity = new StringEntity(json);
-        //     httpPost.setEntity(entity);
-        //     httpPost.setHeader("Accept", "application/json");
-        //     httpPost.setHeader("Content-type", "application/json");
-
-        //     // Executing the Get request
-        //     LOG.info(" ## HttpPost - {}", httpClient);
-        //     httpClient.execute(httpPost);
-        //     LOG.info(" ## HttpPost Resposnse ");
-        //     // Getting the response
-        //     // String response = EntityUtils.toString(httpresponse.getEntity());
-        //     // System.out.println(response);
-        // } catch (Exception e) {
-        //     LOG.error(" ### => Error: ", e);
-        // }
 
     }
 
