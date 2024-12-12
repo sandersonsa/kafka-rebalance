@@ -34,7 +34,7 @@ public class MensagemService {
     }
 
     public void salvarMensagemHttp(Mensagem mensagem) throws ParseException, IOException {
-
+        LOG.info(" ## Salvando mensagem :: ", mensagem.getUuid());
         try {
             HttpPost httpPost = new HttpPost(uri);
 
@@ -46,8 +46,9 @@ public class MensagemService {
             httpPost.setHeader("Content-type", "application/json");
 
             // Executing the Get request
+            LOG.info(" ## HttpPost ");
             httpClient.execute(httpPost);
-
+            LOG.info(" ## HttpPost Resposnse ");
             // Getting the response
             // String response = EntityUtils.toString(httpresponse.getEntity());
             // System.out.println(response);
