@@ -48,10 +48,12 @@ public class MensagemService {
         try (CloseableHttpClient client = httpClient;
             CloseableHttpResponse response = httpClient.execute(httpPost)){
 
-            String result = EntityUtils.toString(response.getEntity());
+            // String result = EntityUtils.toString(response.getEntity());
             System.out.println("POST Response Status:: " + response.getStatusLine().getStatusCode());
             // LOG.info(" ## Result: {}", result);
             // assertThat(statusCode, equalTo(HttpStatus.SC_OK));
+        } catch (Exception e) {
+            LOG.error(" ##### Error MensagemService {} - {} ", mensagem.getUuid() ,e.getMessage());
         }
 
     }
