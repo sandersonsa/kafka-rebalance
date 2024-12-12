@@ -52,14 +52,14 @@ public class KafkaConsumerConfig {
 
             @Override
             public void onPartitionsRevokedBeforeCommit(Consumer<?, ?> consumer, Collection<TopicPartition> partitions) {
-                System.out.println(" #### onPartitionsRevokedBeforeCommit #### ");
+                System.out.println(" \n#### onPartitionsRevokedBeforeCommit ####\n");
                 // acknowledge any pending Acknowledgments (if using manual acks)
                 // consumer.commitSync();
             }
         
             @Override
             public void onPartitionsRevokedAfterCommit(Consumer<?, ?> consumer, Collection<TopicPartition> partitions) {
-                System.out.println(" #### onPartitionsRevokedAfterCommit #### ");
+                System.out.println(" \n#### onPartitionsRevokedAfterCommit ####\n ");
                 // ...
                 // store(consumer.position(partition));
                 // ...
@@ -67,7 +67,7 @@ public class KafkaConsumerConfig {
         
             @Override
             public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                System.out.println(" #### onPartitionsAssigned #### ");
+                System.out.println(" \n#### onPartitionsAssigned ####\n ");
                 // ...
                 // consumer.seek(partition, offsetTracker.getOffset() + 1);
                 // ...
@@ -75,17 +75,17 @@ public class KafkaConsumerConfig {
 
             @Override
             public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                System.out.println(" #### onPartitionsRevoked #### ");
+                System.out.println(" \n#### onPartitionsRevoked ####\n ");
             }
 
             @Override
             public void onPartitionsAssigned(Consumer<?, ?> consumer, Collection<TopicPartition> partitions) {
-                System.out.println(" #### onPartitionsAssigned #### ");
+                System.out.println(" \n#### onPartitionsAssigned ####\n ");
             }
 
             @Override
             public void onPartitionsLost(Consumer<?, ?> consumer, Collection<TopicPartition> partitions) {
-                System.out.println(" #### onPartitionsLost #### ");
+                System.out.println(" \n#### onPartitionsLost ####\n ");
             }
 
             

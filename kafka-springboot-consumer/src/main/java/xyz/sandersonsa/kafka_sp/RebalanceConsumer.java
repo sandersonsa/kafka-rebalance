@@ -29,17 +29,16 @@ public class RebalanceConsumer {
     })
     public void consumehttp(ConsumerRecord<String, String> consumerRecord) {
         String hostName = System.getenv("HOSTNAME");
-
+        Mensagem mensagem = new Mensagem();
         // LOG.info("Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(), consumerRecord.value());
-        try {
-            Mensagem mensagem = new Mensagem();
+        try {            
             mensagem.setUuid(consumerRecord.value());
             mensagem.setHostName(hostName);
             mensagem.setPartition(String.valueOf(consumerRecord.partition()));
 
             mensagemService.salvarMensagemHttp(mensagem);
         } catch (Exception e) {
-            LOG.error(" ##### Error: ", e);
+            LOG.error(" ##### Error salvarMensagemHttp {} - {} ", mensagem.getUuid() ,e.getMessage());
         }
 
     }
