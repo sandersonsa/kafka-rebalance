@@ -25,4 +25,9 @@ public class MensagemController {
         return ResponseEntity.ok(savedMensagem);
     }
 
+    @PostMapping("/teste")
+    public ResponseEntity<Void> perf() {
+        return ResponseEntity.ok().build();
+    }
+
 }
