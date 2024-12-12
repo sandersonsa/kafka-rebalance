@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class ProducerService {
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Async
     public CompletableFuture<String> sendMessages(Integer quantidade) throws InterruptedException {                
@@ -30,7 +30,7 @@ public class ProducerService {
         for (int i = 0; i < quantidade; i++) {
             UUID uuid = UUID.randomUUID();
             JSONObject json = buildJson(uuid.toString());
-            kafkaTemplate.send("t-rebalance", json);
+            kafkaTemplate.send("t-rebalance", json.toString());
         }
         System.out.println(quantidade + " mensagens enviadas");
         return CompletableFuture.completedFuture("Complete");

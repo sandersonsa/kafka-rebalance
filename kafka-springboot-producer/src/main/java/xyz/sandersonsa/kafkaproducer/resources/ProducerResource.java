@@ -27,7 +27,7 @@ public class ProducerResource {
     @GetMapping("/detran/{quantidade}")
     public String producerMessagesDetran(@PathVariable String quantidade) throws NumberFormatException, InterruptedException {
         producerService.sendMessagesJson(Integer.parseInt(quantidade));
-        return "OK";
+        return "OK-DETRAN";
     }
     
 
