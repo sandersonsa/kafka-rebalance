@@ -46,7 +46,7 @@ public class MensagemService {
             httpPost.setHeader("Content-type", "application/json");
 
             // Executing the Get request
-            LOG.info(" ## HttpPost ");
+            LOG.info(" ## HttpPost - {}", httpClient);
             httpClient.execute(httpPost);
             LOG.info(" ## HttpPost Resposnse ");
             // Getting the response
