@@ -39,6 +39,7 @@ public class RebalanceConsumer {
             mensagemService.salvarMensagemHttp(mensagem);
         } catch (Exception e) {
             LOG.error(" ##### Error salvarMensagemHttp {} - {} ", mensagem.getUuid() ,e.getMessage());
+            throw new RuntimeException(e);
         }
 
     }
