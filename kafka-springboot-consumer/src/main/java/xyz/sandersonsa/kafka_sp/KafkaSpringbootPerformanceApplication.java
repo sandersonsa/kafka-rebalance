@@ -56,7 +56,7 @@ public class KafkaSpringbootPerformanceApplication {
 		try {
 			mensagemService.salvarMensagemHttp(mensagem);
 		} catch (ParseException | IOException e) {
-			e.printStackTrace();
+			LOG.error(" ### ERROR salvarMensagemHttp => {} ", mensagem.getUuid());
 		}
 	}
 
