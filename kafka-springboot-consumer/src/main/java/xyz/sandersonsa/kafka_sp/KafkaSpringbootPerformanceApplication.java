@@ -42,19 +42,7 @@ public class KafkaSpringbootPerformanceApplication {
 			ConsumerConfig.MAX_POLL_RECORDS_CONFIG + "=${app.spring.kafka.max.poll.records}"
 	})
 	public void consumehttp(ConsumerRecord<String, String> consumerRecord) {
-		String hostName = System.getenv("HOSTNAME");
-		LOG.info("ParallelStreamProcessor - Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(), consumerRecord.value());
-		try {
-			Mensagem mensagem = new Mensagem();
-			mensagem.setUuid(consumerRecord.value());
-			mensagem.setHostName(hostName);
-			mensagem.setPartition(String.valueOf(consumerRecord.partition()));
-
-			mensagemService.salvarMensagemHttp(mensagem);
-		} catch (Exception e) {
-			LOG.error("Error: ", e);
-		}
-
+		//ativo no ApplicationRunner
 	}
 
 	private void salvarMensagem(ConsumerRecord<String, String> consumerRecord) {
@@ -83,7 +71,7 @@ public class KafkaSpringbootPerformanceApplication {
 			var options = ParallelConsumerOptions.<String, String>builder()
 					.ordering(ProcessingOrder.KEY)
 					.consumer(consumer)
-					.maxConcurrency(15)
+					.maxConcurrency(30)
 					.build();
 			ParallelStreamProcessor<String, String> processor = ParallelStreamProcessor
 					.createEosStreamProcessor(options);

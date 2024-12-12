@@ -1,13 +1,9 @@
 package xyz.sandersonsa.kafka_sp.config;
 
 import org.apache.kafka.common.TopicPartition;
-import org.apache.kafka.common.protocol.types.Field.Str;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-
-import lombok.RequiredArgsConstructor;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
