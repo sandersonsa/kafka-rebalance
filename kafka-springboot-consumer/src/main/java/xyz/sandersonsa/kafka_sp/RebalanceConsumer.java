@@ -30,8 +30,7 @@ public class RebalanceConsumer {
     public void consumehttp(ConsumerRecord<String, String> consumerRecord) {
         String hostName = System.getenv("HOSTNAME");
 
-        LOG.info("Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(),
-                consumerRecord.value());
+        // LOG.info("Partition : {}, Offset : {}, Message : {}", consumerRecord.partition(), consumerRecord.offset(), consumerRecord.value());
         try {
             Mensagem mensagem = new Mensagem();
             mensagem.setUuid(consumerRecord.value());
