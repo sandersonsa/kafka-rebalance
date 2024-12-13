@@ -23,10 +23,9 @@ public class MensagemController {
     private final TesteService testeService;
     private AtomicInteger count;
 
-    public MensagemController(MensagemService service, TesteService testeService, AtomicInteger count) {
+    public MensagemController(MensagemService service, TesteService testeService) {
         this.testeService = testeService;
         this.service = service;
-        this.count = count;
     }
 
     @PostMapping("/mensagem")
@@ -37,6 +36,7 @@ public class MensagemController {
 
     @GetMapping("/teste")
     public ResponseEntity<Void> perf() {
+        count = new AtomicInteger(0);
         testeService.teste(count);
         return ResponseEntity.ok().build();
     }
