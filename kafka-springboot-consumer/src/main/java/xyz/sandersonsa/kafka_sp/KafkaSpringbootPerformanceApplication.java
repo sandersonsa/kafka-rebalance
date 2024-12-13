@@ -54,7 +54,8 @@ public class KafkaSpringbootPerformanceApplication {
 		mensagem.setPartition(String.valueOf(consumerRecord.partition()));
 
 		try {
-			mensagemService.salvarMensagemHttp(mensagem);
+			mensagemService.testePerformance(mensagem);
+			// mensagemService.salvarMensagemHttp(mensagem);
 		} catch (ParseException | IOException e) {
 			LOG.error(" ### ERROR salvarMensagemHttp => {} ", mensagem.getUuid());
 		}
