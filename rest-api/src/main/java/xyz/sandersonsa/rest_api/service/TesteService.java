@@ -28,7 +28,7 @@ public class TesteService {
         //     e.printStackTrace();
         // }
         try {
-            TimeUnit.SECONDS.sleep(Integer.parseInt(THREAD_SLEEP));
+            TimeUnit.MILLISECONDS.sleep(Integer.parseInt(THREAD_SLEEP));
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
         }
