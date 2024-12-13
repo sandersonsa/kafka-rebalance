@@ -10,11 +10,15 @@ import lombok.extern.java.Log;
 @Log
 public class TesteService {
 
-    // private AtomicInteger count;
+    private AtomicInteger count;
 
-    // public TesteService() {
-    //     count = new AtomicInteger(0);
-    // }
+    public TesteService() {
+        count = new AtomicInteger(0);
+    }
+
+    public void testev2() {
+        log.info(" ### Teste V2 - " + count.getAndIncrement() + "###");
+    }
 
     public void teste(AtomicInteger count) {
         log.info(" ### Teste - " + count.getAndIncrement() + "###");

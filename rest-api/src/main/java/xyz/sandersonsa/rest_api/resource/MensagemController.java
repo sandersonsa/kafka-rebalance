@@ -41,4 +41,10 @@ public class MensagemController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/teste/v2")
+    public ResponseEntity<Void> perfv2() {
+        testeService.testev2();
+        return ResponseEntity.ok().build();
+    }
+
 }
