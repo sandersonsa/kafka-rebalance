@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.java.Log;
 import xyz.sandersonsa.rest_api.model.Mensagem;
 import xyz.sandersonsa.rest_api.service.MensagemService;
+import xyz.sandersonsa.rest_api.service.TesteService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -17,8 +18,10 @@ import xyz.sandersonsa.rest_api.service.MensagemService;
 public class MensagemController {
 
     private final MensagemService service;
+    private final TesteService testeService;
 
-    public MensagemController(MensagemService service) {
+    public MensagemController(MensagemService service, TesteService testeService) {
+        this.testeService = testeService;
         this.service = service;
     }
 
@@ -30,7 +33,7 @@ public class MensagemController {
 
     @GetMapping("/teste")
     public ResponseEntity<Void> perf() {
-        log.info(" ### Teste ###");
+        testeService.teste();
         return ResponseEntity.ok().build();
     }
 
