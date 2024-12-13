@@ -20,9 +20,20 @@ public class MensagemService {
         this.repository = repository;
     }
 
+    // public Mensagem salvarMensagem(Mensagem mensagem) {
+    //     try {            
+    //         Thread.sleep(Integer.parseInt(appDelayMs));
+    //         log.info(" ### Salvar Mensagem: {} ####", mensagem.getUuid());
+    //         return repository.save(mensagem);
+    //     } catch (Exception e) {
+    //         // Handle exception or log the error
+    //         throw new RuntimeException(" ## Failed to save mensagem: " + e.getMessage());
+    //     }
+    // }
+
     public Mensagem salvarMensagem(Mensagem mensagem) {
         try {            
-            Thread.sleep(Integer.parseInt(appDelayMs));
+            // Thread.sleep(Integer.parseInt(appDelayMs));
             log.info(" ### Salvar Mensagem: {} ####", mensagem.getUuid());
             return repository.save(mensagem);
         } catch (Exception e) {
