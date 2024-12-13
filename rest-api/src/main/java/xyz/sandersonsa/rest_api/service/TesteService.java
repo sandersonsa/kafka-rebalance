@@ -21,11 +21,11 @@ public class TesteService {
     }
 
     public void testev2() {
-        try {
-            Thread.sleep(Integer.parseInt(THREAD_SLEEP));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     Thread.sleep(Integer.parseInt(THREAD_SLEEP));
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
         log.info(" ### Teste V2 - " + count.getAndIncrement() + " ###");
     }
 
