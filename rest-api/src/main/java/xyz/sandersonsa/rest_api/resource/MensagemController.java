@@ -1,5 +1,7 @@
 package xyz.sandersonsa.rest_api.resource;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +21,12 @@ public class MensagemController {
 
     private final MensagemService service;
     private final TesteService testeService;
+    private AtomicInteger count;
 
-    public MensagemController(MensagemService service, TesteService testeService) {
+    public MensagemController(MensagemService service, TesteService testeService, AtomicInteger count) {
         this.testeService = testeService;
         this.service = service;
+        this.count = count;
     }
 
     @PostMapping("/mensagem")
@@ -33,7 +37,7 @@ public class MensagemController {
 
     @GetMapping("/teste")
     public ResponseEntity<Void> perf() {
-        testeService.teste();
+        testeService.teste(count);
         return ResponseEntity.ok().build();
     }
 
