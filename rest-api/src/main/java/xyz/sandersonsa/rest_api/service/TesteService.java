@@ -1,5 +1,6 @@
 package xyz.sandersonsa.rest_api.service;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,11 @@ public class TesteService {
         // } catch (InterruptedException e) {
         //     e.printStackTrace();
         // }
+        try {
+            TimeUnit.SECONDS.sleep(Integer.parseInt(THREAD_SLEEP));
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
         log.info(" ### Teste V2 - " + count.getAndIncrement() + " ###");
     }
 
