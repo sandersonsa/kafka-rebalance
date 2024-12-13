@@ -10,6 +10,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +33,9 @@ public class KafkaSpringbootPerformanceApplication {
 
 	@Autowired
 	private MensagemService mensagemService;
+
+	@Value("${app.kafka.consumer.parallel.consumers}")
+    private String NUM_PARALLEL_CONSUMERS;
 
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaSpringbootPerformanceApplication.class, args);
@@ -72,7 +76,7 @@ public class KafkaSpringbootPerformanceApplication {
 			var options = ParallelConsumerOptions.<String, String>builder()
 					.ordering(ProcessingOrder.KEY)
 					.consumer(consumer)
-					.maxConcurrency(30)
+					.maxConcurrency(Integer.parseInt(NUM_PARALLEL_CONSUMERS))
 					.build();
 			ParallelStreamProcessor<String, String> processor = ParallelStreamProcessor
 					.createEosStreamProcessor(options);
