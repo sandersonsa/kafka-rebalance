@@ -2,6 +2,7 @@ package xyz.sandersonsa.rest_api.service;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.java.Log;
@@ -10,6 +11,9 @@ import lombok.extern.java.Log;
 @Log
 public class TesteService {
 
+    @Value("${app.thread.sleep}")
+    private String THREAD_SLEEP;
+
     private AtomicInteger count;
 
     public TesteService() {
@@ -17,11 +21,21 @@ public class TesteService {
     }
 
     public void testev2() {
-        log.info(" ### Teste V2 - " + count.getAndIncrement() + "###");
+        try {
+            Thread.sleep(Integer.parseInt(THREAD_SLEEP));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info(" ### Teste V2 - " + count.getAndIncrement() + " ###");
     }
 
     public void teste(AtomicInteger count) {
-        log.info(" ### Teste - " + count.getAndIncrement() + "###");
+        try {
+            Thread.sleep(Integer.parseInt(THREAD_SLEEP));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info(" ### Teste - " + count.getAndIncrement() + " ###");
     }
 
 }
