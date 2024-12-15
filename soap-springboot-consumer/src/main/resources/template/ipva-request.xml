@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope
+    xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:urn="urn:com-softwareag-entirex-rpc:LIBBRK-GTRN0003">
+    <soap:Body>
+        <urn:GTRN0003>
+            <PARTE-FIXA>%s</PARTE-FIXA>
+            <PARTE-VARIAVEL>
+                <string>%s</string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+                <string></string>
+            </PARTE-VARIAVEL>
+        </urn:GTRN0003>
+    </soap:Body>
+</soap:Envelope>
