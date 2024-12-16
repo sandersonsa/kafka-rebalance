@@ -23,7 +23,6 @@ public class IpvaBO {
         List<String> resultado = new ArrayList<String>();
         String format  = "%s%s";
 
-        log.info("Iniciando chamadas às páginas da transacao 23 em paralelo...");
         var starTime = System.currentTimeMillis();
 
         CompletableFuture<String> retorno01 = CompletableFuture.supplyAsync(() -> retorno.put(1, soap.callSoap(fixo, String.format(format, renavam, "01"))));
@@ -46,7 +45,7 @@ public class IpvaBO {
         }
 
         var endTime = System.currentTimeMillis();
-        log.info("Tempo total de todas as chamadas: {} segundos", (endTime - starTime) / 1000);
+        log.info("Tempo total de todas as chamadas: {} mSec", (endTime - starTime));
 
         return resultado;
     }
@@ -55,7 +54,7 @@ public class IpvaBO {
 
         String format  = "%s%s";
 
-        log.info("Iniciando chamadas às páginas da transacao 23 em série...");
+        // log.info("Iniciando chamadas às páginas da transacao 23 em série...");
         var starTime = System.currentTimeMillis();
 
         String retorno01 = soap.callSoap(fixo, String.format(format, renavam, "01"));
@@ -75,7 +74,7 @@ public class IpvaBO {
                 retorno06, retorno07, retorno08, retorno09, retorno10);
 
         var endTime = System.currentTimeMillis();
-        log.info("Tempo total de todas as chamadas: {} segundos", (endTime - starTime) / 1000);
+        log.info("Tempo total de todas as chamadas: {} mSec", (endTime - starTime));
 
         return retorno;
     }
