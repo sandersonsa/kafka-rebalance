@@ -22,33 +22,24 @@ public class ProducerService {
     List<String> listaRenavam = Arrays.asList("01", "03", "04");
 
     @Async
-    public CompletableFuture<String> sendMessages(Integer quantidade) throws InterruptedException {                
-        for (int i = 0; i < quantidade; i++) {
-            UUID uuid = UUID.randomUUID();
-            kafkaTemplate.send("t-rebalance", uuid.toString());
-        }
-        System.out.println(quantidade + " mensagens enviadas");
+    public CompletableFuture<String> sendMessages(String uuid) throws InterruptedException {                
+        kafkaTemplate.send("t-rebalance", uuid);
         return CompletableFuture.completedFuture("Complete");
     }
 
     @Async
-    public CompletableFuture<String> sendMessagesJson(Integer quantidade) throws InterruptedException {                
+    public CompletableFuture<String> sendMessagesJson(String uuid) throws InterruptedException {                
         Random rand = new Random();
-        for (int i = 0; i < quantidade; i++) {
-            int randomIndex = rand.nextInt(listaRenavam.size());
-            String renavam = listaRenavam.get(randomIndex);
-            UUID uuid = UUID.randomUUID();
-            JSONObject json = buildJson(uuid.toString(), renavam);
-            
-            //kafkaTemplate.send("cluster-sefazrj-beta.req-servicos-ipva", uuid.toString());
+        
+        int randomIndex = rand.nextInt(listaRenavam.size());
+        String renavam = listaRenavam.get(randomIndex);
+        JSONObject json = buildJson(uuid, renavam);
 
-            var record = new ProducerRecord<String, String>("t-rebalance", json.toString());
-            record.headers().add("transaction-id", "23".getBytes());
+        var record = new ProducerRecord<String, String>("t-rebalance", json.toString());
+        record.headers().add("transaction-id", "23".getBytes());
 
-            kafkaTemplate.send(record);
+        kafkaTemplate.send(record);
 
-        }
-        System.out.println(quantidade + " mensagens enviadas");
         return CompletableFuture.completedFuture("Complete");
     }
 
