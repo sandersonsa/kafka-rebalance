@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class ProducerService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    List<String> listaRenavam = Arrays.asList("01", "03", "04");
+    @Value("${app.lista.renavam}")
+    String[] listaRenavam;
 
     @Async
     public CompletableFuture<String> sendMessages(String uuid) throws InterruptedException {                
@@ -29,11 +31,7 @@ public class ProducerService {
 
     @Async
     public CompletableFuture<String> sendMessagesJson(String uuid) throws InterruptedException {                
-        Random rand = new Random();
-        
-        int randomIndex = rand.nextInt(listaRenavam.size());
-        String renavam = listaRenavam.get(randomIndex);
-        JSONObject json = buildJson(uuid, renavam);
+        JSONObject json = buildJson(uuid, getRenavam());
 
         var record = new ProducerRecord<String, String>("t-rebalance", json.toString());
         record.headers().add("transaction-id", "23".getBytes());
@@ -41,6 +39,13 @@ public class ProducerService {
         kafkaTemplate.send(record);
 
         return CompletableFuture.completedFuture("Complete");
+    }
+
+    private String getRenavam() {
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(listaRenavam.length);
+        String renavam = listaRenavam[randomIndex];
+        return renavam;
     }
 
     private JSONObject buildJson(String id, String renavam) {
