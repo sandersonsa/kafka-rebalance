@@ -31,11 +31,22 @@ public class ProducerResource {
         return "OK";
     }
 
-    @GetMapping("/detran/{quantidade}")
-    public String producerMessagesDetran(@PathVariable String quantidade) throws NumberFormatException, InterruptedException {
+    @GetMapping("/detran/{transacao}/{quantidade}")
+    public String producerMessagesDetran(@PathVariable String transacao, @PathVariable String quantidade) throws NumberFormatException, InterruptedException {
+        System.out.println("Mensagem " + transacao + "...");
         for (int i = 0; i < Integer.parseInt(quantidade); i++) {
             UUID uuid = UUID.randomUUID();
-            producerService.sendMessagesJson(uuid.toString());
+            switch (transacao) {
+                case "23":
+                    producerService.sendMessagesJson023(uuid.toString());
+                    break;
+                case "17":
+                    producerService.sendMessagesJson017(uuid.toString());
+                    break;
+                default:
+                    System.out.println(">>> Transação " + transacao + " desconhecida!!!");
+                    break;
+            }
         }
         System.out.println(quantidade + " mensagens enviadas");
         return "OK-DETRAN";
