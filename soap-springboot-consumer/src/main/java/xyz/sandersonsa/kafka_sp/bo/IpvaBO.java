@@ -1,6 +1,7 @@
 package xyz.sandersonsa.kafka_sp.bo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -17,6 +18,9 @@ public class IpvaBO {
 
     @Autowired
     SoapService soap;
+
+    private static final List<String> LISTA_RETORNOS = Arrays
+            .asList("", "OK", "RPC/SEFAZ/CALLNAT not registered");
 
     public List<String> callSoapParalelo(final String fixo, final String renavam) {
         HashMap<Integer, String> retorno = new HashMap<>();
@@ -57,16 +61,16 @@ public class IpvaBO {
         // log.info("Iniciando chamadas às páginas da transacao 23 em série...");
         var starTime = System.currentTimeMillis();
 
-        String retorno01 = soap.callSoap(fixo, String.format(format, renavam, "01"));
-        String retorno02 = soap.callSoap(fixo, String.format(format, renavam, "02"));
-        String retorno03 = soap.callSoap(fixo, String.format(format, renavam, "03"));
-        String retorno04 = soap.callSoap(fixo, String.format(format, renavam, "04"));
-        String retorno05 = soap.callSoap(fixo, String.format(format, renavam, "05"));
-        String retorno06 = soap.callSoap(fixo, String.format(format, renavam, "06"));
-        String retorno07 = soap.callSoap(fixo, String.format(format, renavam, "07"));
-        String retorno08 = soap.callSoap(fixo, String.format(format, renavam, "08"));
-        String retorno09 = soap.callSoap(fixo, String.format(format, renavam, "09"));
-        String retorno10 = soap.callSoap(fixo, String.format(format, renavam, "10"));
+        String retorno01 = nextCall("", fixo, renavam, "01");
+        String retorno02 = nextCall(retorno01, fixo, renavam, "02");
+        String retorno03 = nextCall(retorno02, fixo, renavam, "03");
+        String retorno04 = nextCall(retorno03, fixo, renavam, "04");
+        String retorno05 = nextCall(retorno04, fixo, renavam, "05");
+        String retorno06 = nextCall(retorno05, fixo, renavam, "06");
+        String retorno07 = nextCall(retorno06, fixo, renavam, "07");
+        String retorno08 = nextCall(retorno07, fixo, renavam, "08");
+        String retorno09 = nextCall(retorno08, fixo, renavam, "09");
+        String retorno10 = nextCall(retorno09, fixo, renavam, "10");
 
         String retorno = String.format(
                 "%s%s%s%s%s%s%s%s%s%s", 
@@ -79,5 +83,10 @@ public class IpvaBO {
         return retorno;
     }
 
+    private String nextCall(String msgAnterior, String fixo, String renavam, String pagina) {
+        if ( pagina.equals("01") || !LISTA_RETORNOS.contains(msgAnterior.trim()))
+            return soap.callSoap(fixo, String.format("%s%s", renavam, pagina));
+        return "";
+    }
 
 }

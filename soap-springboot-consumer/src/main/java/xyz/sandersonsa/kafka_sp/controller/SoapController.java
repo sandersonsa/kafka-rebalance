@@ -31,8 +31,8 @@ public class SoapController {
     @GetMapping("/serial/{quantidade}")
     public String serial(@PathVariable Integer quantidade) {
         for (int i = 0; i < quantidade; i++) {
-            ipvaBO.callSoapSerial(FIXO, getRenavam());
-            log.info("chamada {} finalizada", i);
+            String value = ipvaBO.callSoapSerial(FIXO, getRenavam());
+            log.info("retorno >>> {} ", value);
         }
         return "Chamada serial disparada...";
     }

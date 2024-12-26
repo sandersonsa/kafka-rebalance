@@ -1,6 +1,7 @@
 package xyz.sandersonsa.kafka_sp.utils;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -31,21 +32,36 @@ public class XmlUtils {
             Document doc = db.parse(stream);
             doc.getDocumentElement().normalize();
 
-            NodeList list = doc.getElementsByTagName(IpvaNode.PARTE_VARIAVEL.getValue());
+            String errorMsg = hasSoapFault(doc);
+            if (!errorMsg.isEmpty()) {
+                result.append(errorMsg);
+            } else {
+                NodeList list = doc.getElementsByTagName(IpvaNode.PARTE_VARIAVEL.getValue());
 
-            for (int temp = 0; temp < list.getLength(); temp++) {
-                Node node = list.item(temp);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    NodeList listString = doc.getElementsByTagName(IpvaNode.STRING.getValue());
-                    for(int i = 0; i < listString.getLength(); i++){
-                        result.append(listString.item(i).getTextContent());
+                for (int temp = 0; temp < list.getLength(); temp++) {
+                    Node node = list.item(temp);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        NodeList listString = doc.getElementsByTagName(IpvaNode.STRING.getValue());
+                        for(int i = 0; i < listString.getLength(); i++){
+                            result.append(listString.item(i).getTextContent());
+                        }
                     }
                 }
             }
-
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
         return result.toString();
     }
+
+    private static String hasSoapFault(Document doc) {
+        NodeList soapFault = doc.getElementsByTagName(IpvaNode.CAUSED_BY.getValue());
+        if (soapFault.getLength() > 0) {
+            Element errorValue = (Element) soapFault.item(0);
+            NodeList errorText = errorValue.getElementsByTagName(IpvaNode.ERROR_TEXT.getValue());
+            return errorText.item(0).getFirstChild().getTextContent();
+        }
+        return "";
+    }
+
 }

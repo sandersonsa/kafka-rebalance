@@ -4,7 +4,9 @@ public enum IpvaNode {
     
     PARTE_FIXA("PARTE-FIXA"),
     PARTE_VARIAVEL("PARTE-VARIAVEL"),
-    STRING("string");
+    STRING("string"),
+    CAUSED_BY("CausedBy"),
+    ERROR_TEXT("ErrorText");
 
     private String value;
 
